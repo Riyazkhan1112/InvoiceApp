@@ -9,6 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 //        builder.Configuration.GetConnectionString("DefaultConnection"));
 //});
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
