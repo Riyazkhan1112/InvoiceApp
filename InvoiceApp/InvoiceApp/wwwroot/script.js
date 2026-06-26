@@ -1,60 +1,53 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
     fetch("/api/invoice")
-
-        .then(response => response.json())
-
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to load invoice");
+            }
+            return response.json();
+        })
         .then(data => {
 
-            let html = "";
+            let html = `
+                <h2>Invoice No : ${data.invoiceNo}</h2>
+                <h3>Customer : ${data.customer}</h3>
+                <h4>Date : ${data.date}</h4>
 
-            html += `<h2>Invoice No : ${data.invoiceNo}</h2>`;
-            html += `<h3>Customer : ${data.customer}</h3>`;
-            html += `<h4>Date : ${data.date}</h4>`;
-
-            html += "<table>";
-
-            html += `
-            <tr>
-                <th>Item</th>
-                <th>Price</th>
-            </tr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             `;
 
             data.items.forEach(item => {
-
                 html += `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${item.price}</td>
-                </tr>
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                    </tr>
                 `;
-
             });
 
             html += `
-            <tr>
-
-                <td><b>Total</b></td>
-
-                <td><b>${data.total}</b></td>
-
-            </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>$${data.total.toFixed(2)}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
             `;
 
-            html += "</table>";
-
             document.getElementById("invoice-container").innerHTML = html;
-
         })
-
         .catch(error => {
-
             console.error(error);
-
             document.getElementById("invoice-container").innerHTML =
                 "<h2>Unable to load invoice.</h2>";
-
         });
 
 });

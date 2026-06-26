@@ -11,10 +11,10 @@ h1 {
 #invoice-container {
     width: 700px;
     margin: auto;
-    background: white;
+    background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px lightgray;
+    box-shadow: 0 0 10px #ccc;
 }
 
 table {
@@ -25,9 +25,8 @@ table {
 
     table th,
     table td {
-        border: 1px solid gray;
+        border: 1px solid #999;
         padding: 10px;
-        text-align: left;
     }
 
 th {
