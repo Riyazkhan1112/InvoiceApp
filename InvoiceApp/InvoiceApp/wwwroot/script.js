@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("/api/invoice")
+    fetch("https://invoiceapp-dimw.onrender.com/api/invoice")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Failed to load invoice");
